@@ -32,11 +32,11 @@ ZIPLIST_USER_IPBAN6="$IPSET_DIR/zapret-ip-user-ipban6.txt"
 ZUSERLIST_IPBAN="$IPSET_DIR/zapret-hosts-user-ipban.txt"
 ZUSERLIST_EXCLUDE="$IPSET_DIR/zapret-hosts-user-exclude.txt"
 
+BINPATH="$IPSET_DIR/../binaries/$(uname -p)"
 
-IP2NET="$IPSET_DIR/../ip2net/ip2net"
-MDIG="$IPSET_DIR/../mdig/mdig"
+IP2NET="$BINPATH/ip2net/ip2net"
+MDIG="$BINPATH/mdig/mdig"
 [ -z "$MDIG_THREADS" ] && MDIG_THREADS=30
-
 
 exists()
 {
