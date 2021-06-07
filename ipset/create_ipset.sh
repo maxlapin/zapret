@@ -12,13 +12,11 @@ IPSET_CMD="$TMPDIR/ipset_cmd.txt"
 IPSET_SAVERAM_CHUNK_SIZE=20000
 IPSET_SAVERAM_MIN_FILESIZE=131072
 
-
 while [ -n "$1" ]; do
 	[ "$1" = "no-update" ] && NO_UPDATE=1
 	[ "$1" = "clear" ] && DO_CLEAR=1
 	shift
 done
-
 
 file_extract_lines()
 {
@@ -28,6 +26,7 @@ file_extract_lines()
  # awk "{ err=1 } NR < $(($2+1)) { next } { print; err=0 } NR == $(($2+$3)) { exit err } END {exit err}" "$1"
  awk "NR < $(($2+1)) { next } { print } NR == $(($2+$3)) { exit }" "$1"
 }
+
 ipset_restore_chunked()
 {
  # $1 - filename
@@ -43,7 +42,6 @@ ipset_restore_chunked()
     sed -i "$(($pos+1)),$ d" "$1"
  done
 }
-
 
 ipset_get_script()
 {
@@ -96,12 +94,12 @@ create_ipset()
  return 0
 }
 
-
 add_ipfw_table()
 {
  # $1 - table name
  sed -nEe "s/^.+$/table $1 add &/p" | ipfw -q /dev/stdin
 }
+
 populate_ipfw_table()
 {
  # $1 - table name
@@ -109,6 +107,7 @@ populate_ipfw_table()
  zzexist "$2" || return
  zzcat "$2" | sort -u | add_ipfw_table $1
 }
+
 create_ipfw_table()
 {
  # $1 - table name
@@ -141,7 +140,6 @@ print_reloading_backend()
  fi
  echo $s
 }
-
 
 oom_adjust_high
 
